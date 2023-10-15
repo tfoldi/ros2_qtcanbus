@@ -23,7 +23,7 @@ find_package(ament_cmake_auto REQUIRED)
 ament_auto_find_build_dependencies()
 
 
-add_executable(qtcanbus_sender src/qtcanbus_sender.cpp src/node.cpp src/node.h)
+add_executable(qtcanbus_sender src/qtcanbus_sender.cpp src/qtcanbus_sender_node.cpp src/qtcanbus_sender_node.h)
 set_target_properties(qtcanbus_sender PROPERTIES AUTOMOC TRUE)
 target_include_directories(qtcanbus_sender PUBLIC
   $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
