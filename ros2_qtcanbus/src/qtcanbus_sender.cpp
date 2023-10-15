@@ -1,10 +1,11 @@
-#include <rclcpp/rclcpp.hpp>
 #include <QCoreApplication>
 #include <QTimer>
-#include <rclcpp/executor.hpp>
 #include <QObject>
+
+#include <rclcpp/rclcpp.hpp>
+
 #include <libros2qt/qt_executor.h>
-#include "node.h"
+#include "qtcanbus_sender_node.h"
 
 using namespace rclcpp;
 

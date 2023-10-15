@@ -13,6 +13,7 @@
 
   <depend>rclcpp</depend>
   <depend>libros2qt</depend>
+  <depend>ros2_qtcanbus_msg</depend>
 
   <test_depend>ament_lint_auto</test_depend>
   <test_depend>ament_lint_common</test_depend>
