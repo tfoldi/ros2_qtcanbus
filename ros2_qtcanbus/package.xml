@@ -2,7 +2,7 @@
 <?xml-model href="http://download.ros.org/schema/package_format3.xsd" schematypens="http://www.w3.org/2001/XMLSchema"?>
 <package format="3">
   <name>ros2_qtcanbus</name>
-  <version>0.0.0</version>
+  <version>0.1.0</version>
   <description>
   The ROS2 QtCanBus Node is a specialized node designed for interfacing with CAN networks using the QtCanBus framework. This node seamlessly integrates with various QtCanBus devices and plugins, enabling the efficient publishing of CAN messages within the ROS2 ecosystem. Whether you're working with automotive systems, industrial networks, or any application that leverages Controller Area Network (CAN) communication, this node offers a robust and streamlined solution to bring CAN messages into the world of ROS2.
   </description>
