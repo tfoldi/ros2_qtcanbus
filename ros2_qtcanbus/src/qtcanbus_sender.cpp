@@ -9,20 +9,29 @@
 
 using namespace rclcpp;
 
-int main(int argc, char* argv[])
+int main(int argc, char *argv[])
 {
     QCoreApplication a(argc, argv);
     rclcpp::init(argc, argv);
+    int res;
 
-    auto server = std::make_shared<TestNode>();
+    try
+    {
+        auto server = std::make_shared<QtCanbusSenderNode>();
 
-    QtExecutor executor;
-    executor.add_node(server);
+        QtExecutor executor;
+        executor.add_node(server);
 
-    executor.start();
+        executor.start();
 
-    auto res = a.exec();
-    printf("Exited QT thread\n");
+        res = a.exec();
+        printf("Exited QT thread\n");
+    }
+    catch (std::exception &e)
+    {
+        res = 1;
+    }
+
     rclcpp::shutdown();
     return res;
 }

@@ -3,29 +3,30 @@
 #include <QCoreApplication>
 #include <QTimer>
 #include <QObject>
+#include <QCanBusDevice>
 #include <QElapsedTimer>
 
 #include "rclcpp/rclcpp.hpp"
 #include "std_msgs/msg/int32.hpp"
+#include "ros2_qtcanbus_msg/msg/q_can_bus_frame.hpp"
 
-class TestNode : public QObject, public rclcpp::Node
+class QtCanbusSenderNode : public QObject, public rclcpp::Node
 {
     Q_OBJECT
 
 public:
-    TestNode(QObject* parent=nullptr);
-    virtual ~TestNode() = default;
+    QtCanbusSenderNode(QObject* parent=nullptr);
+    virtual ~QtCanbusSenderNode() = default;
 
 private slots:
-    void onQtTimerCB();
+    void readFrames();
 
 private:
 
-    rclcpp::Publisher<std_msgs::msg::Int32>::SharedPtr m_publisher;
-    std_msgs::msg::Int32 m_message;
+    QCanBusDevice *m_canDevice = nullptr;
+
+    rclcpp::Publisher<ros2_qtcanbus_msg::msg::QCanBusFrame>::SharedPtr m_publisher;
+    ros2_qtcanbus_msg::msg::QCanBusFrame m_message;
 
 
-    QTimer *m_timer;
-    QElapsedTimer m_monotonicTimer;
-    rclcpp::TimerBase::SharedPtr m_periodic_timer;
 };

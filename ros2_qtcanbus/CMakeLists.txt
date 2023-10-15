@@ -17,6 +17,7 @@ set(dependencies
     rclcpp
     std_msgs
     libros2qt
+    ros2_qtcanbus_msg
 )
 
 find_package(ament_cmake_auto REQUIRED)

@@ -26,7 +26,7 @@ if(BUILD_TESTING)
   ament_lint_auto_find_test_dependencies()
 endif()
 
-rosidl_generate_interfaces(new_msg
+rosidl_generate_interfaces(${PROJECT_NAME}
   "msg/QCanBusFrame.msg"
   DEPENDENCIES std_msgs
   DEPENDENCIES builtin_interfaces
