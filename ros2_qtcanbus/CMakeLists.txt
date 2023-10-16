@@ -31,7 +31,7 @@ target_include_directories(qtcanbus_sender PUBLIC
   $<INSTALL_INTERFACE:include>)
 target_compile_features(qtcanbus_sender PUBLIC c_std_99 cxx_std_17)  # Require C99 and C++17
 
-target_link_libraries(qtcanbus_sender rclcpp Qt5::Core Qt5::SerialBus)
+target_link_libraries(qtcanbus_sender Qt5::Core Qt5::SerialBus)
 
 ament_target_dependencies(qtcanbus_sender ${dependencies})
 
