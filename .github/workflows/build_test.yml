@@ -31,15 +31,15 @@ jobs:
       image: ${{ matrix.docker_image }}
     steps:
       - name: setup directories
-        run: mkdir -p ros_ws/src
+        run: mkdir -p ros_ws/src/libros2qt ros_ws/src/ros2_qtcanbus
       - name: checkout
         uses: actions/checkout@v2
         with:
-          path: ros_ws/src
+          path: ros_ws/src/ros2_qtcanbus
       - uses: actions/checkout@v4
         with:
           repository: 1r0b1n0/libros2qt
-          path: ros_ws/src
+          path: ros_ws/src/libros2qt
       #- name: Install Qt
       #  uses: jurplel/install-qt-action@v3          
       - name: install deps
