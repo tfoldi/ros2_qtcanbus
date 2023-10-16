@@ -47,6 +47,6 @@ jobs:
       - name: build and test
         uses: ros-tooling/action-ros-ci@master
         with:
-          package-name: ros2_qtcanbus ros2_qtcanbus_msg
+          # package-name: ros2_qtcanbus ros2_qtcanbus_msg
           target-ros2-distro: ${{ matrix.ros_distribution }}
           vcs-repo-file-url: ""
