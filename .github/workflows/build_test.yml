@@ -43,7 +43,7 @@ jobs:
       #- name: Install Qt
       #  uses: jurplel/install-qt-action@v3          
       - name: install deps
-        run: sudo apt-get -y install qtbase5-dev libqt5serialbus5 python3-numpy
+        run: sudo apt-get -y install qtbase5-dev libqt5serialbus5-dev python3-numpy
       - name: build and test
         uses: ros-tooling/action-ros-ci@master
         with:
