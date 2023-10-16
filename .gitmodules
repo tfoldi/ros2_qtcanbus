@@ -1,0 +1,3 @@
+[submodule "libros2qt"]
+	path = libros2qt
+	url = https://github.com/1r0b1n0/libros2qt
