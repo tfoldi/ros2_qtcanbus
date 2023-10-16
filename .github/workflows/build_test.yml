@@ -38,7 +38,7 @@ jobs:
           path: ros_ws/src
       - uses: actions/checkout@v4
         with:
-          repository: https://github.com/1r0b1n0/libros2qt
+          repository: 1r0b1n0/libros2qt
           path: ros_ws/src
       - name: build and test
         uses: ros-tooling/action-ros-ci@master
