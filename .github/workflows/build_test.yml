@@ -40,8 +40,10 @@ jobs:
         with:
           repository: 1r0b1n0/libros2qt
           path: ros_ws/src
-      - name: Install Qt
-        uses: jurplel/install-qt-action@v3          
+      #- name: Install Qt
+      #  uses: jurplel/install-qt-action@v3          
+      - name: install deps
+        run: sudo apt-get install qt5-default libqt5serialbus5 python3-numpy
       - name: build and test
         uses: ros-tooling/action-ros-ci@master
         with:

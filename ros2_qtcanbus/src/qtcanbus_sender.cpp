@@ -25,7 +25,7 @@ int main(int argc, char *argv[])
         executor.start();
 
         res = a.exec();
-        printf("Exited QT thread\n");
+        RCLCPP_INFO(server->get_logger(), "Exited QT thread");
     }
     catch (std::exception &e)
     {
