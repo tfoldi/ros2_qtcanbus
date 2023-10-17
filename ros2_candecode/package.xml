@@ -2,14 +2,15 @@
 <?xml-model href="http://download.ros.org/schema/package_format3.xsd" schematypens="http://www.w3.org/2001/XMLSchema"?>
 <package format="3">
   <name>ros2_candecode</name>
-  <version>0.0.0</version>
-  <description>TODO: Package description</description>
+  <version>0.1.0</version>
+  <description>Decode CAN messages using DBC files</description>
   <maintainer email="tfoldi@xsi.hu">tfoldi</maintainer>
   <license>TODO: License declaration</license>
 
   <depend>std_msgs</depend>
   <depend>rclpy</depend>
   <depend>ros2_qtcanbus_msg</depend>
+  <depend>diagnostic_msgs</depend>
   <depend>cantools</depend>
 
   <test_depend>ament_copyright</test_depend>
