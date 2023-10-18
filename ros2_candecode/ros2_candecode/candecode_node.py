@@ -1,3 +1,27 @@
+# Copyright 2023, Tamas Foldi
+#
+# Redistribution and use in source and binary forms, with or without modification, are permitted
+# provided that the following conditions are met:
+#
+# 1. Redistributions of source code must retain the above copyright notice, this list of
+#    conditions and the following disclaimer.
+#
+# 2. Redistributions in binary form must reproduce the above copyright notice, this list of
+#    conditions and the following disclaimer in the documentation and/or other materials provided
+#    with the distribution.
+#
+# 3. Neither the name of the copyright holder nor the names of its contributors may be used to
+#    endorse or promote products derived from this software without specific prior written permission.
+#
+# THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS “AS IS” AND ANY EXPRESS OR
+# IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND
+# FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS
+# BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
+# (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR
+# PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT,
+# STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
+# SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+
 import rclpy
 from rclpy.node import Node
 import cantools
@@ -14,30 +38,42 @@ class CandecodeNode(Node):
     def __init__(self):
         super().__init__("candecode_node")
 
-        qos_history_desc = ParameterDescriptor(description='QoS history depth')
-        warn_if_unknown_desc = ParameterDescriptor(description='Warn if unknown CAN ID received')
-        dbc_file_desc = ParameterDescriptor(description='Path to DBC file to use for decoding')
+        qos_history_desc = ParameterDescriptor(description="QoS history depth")
+        warn_if_unknown_desc = ParameterDescriptor(
+            description="Warn if unknown CAN ID received"
+        )
+        dbc_file_desc = ParameterDescriptor(
+            description="Path to DBC file to use for decoding"
+        )
 
-        self.declare_parameter('qos_history', 100, qos_history_desc)
-        self.declare_parameter('warn_if_unknown', False, warn_if_unknown_desc)
-        self.declare_parameter('dbc_file', '/Users/tfoldi/Developer/mobility/canedge-influxdb-writer/dbc_files/Model3CAN.dbc', dbc_file_desc)
+        self.declare_parameter("qos_history", 100, qos_history_desc)
+        self.declare_parameter("warn_if_unknown", False, warn_if_unknown_desc)
+        self.declare_parameter(
+            "dbc_file",
+            "/Users/tfoldi/Developer/mobility/canedge-influxdb-writer/dbc_files/Model3CAN.dbc",
+            dbc_file_desc,
+        )
 
-        dbc_file = self.get_parameter('dbc_file').get_parameter_value().string_value
-        qos_history = self.get_parameter('qos_history').get_parameter_value().integer_value 
-        self.warn_if_unknown = self.get_parameter('warn_if_unknown').get_parameter_value().bool_value
-        
+        dbc_file = self.get_parameter("dbc_file").get_parameter_value().string_value
+        qos_history = (
+            self.get_parameter("qos_history").get_parameter_value().integer_value
+        )
+        self.warn_if_unknown = (
+            self.get_parameter("warn_if_unknown").get_parameter_value().bool_value
+        )
+
         self.db = cantools.database.load_file(dbc_file)
 
         self.diagnostics_pub = self.create_publisher(
-            DiagnosticArray,
-            '/diagnostics',
-            qos_history) 
+            DiagnosticArray, "/diagnostics", qos_history
+        )
 
         self.subscription = self.create_subscription(
             QCanBusFrame,
-            'from_can_bus',
+            "from_can_bus",
             self.listener_callback,
-            rclpy.qos.qos_profile_sensor_data)
+            rclpy.qos.qos_profile_sensor_data,
+        )
         self.subscription  # prevent unused variable warning
 
         self.get_logger().info("Candecode initalized")
@@ -46,7 +82,7 @@ class CandecodeNode(Node):
         self.get_logger().debug('received message: "%s/%s"' % (msg.id, hex(msg.id)))
 
         try:
-            val = self.db.decode_message(msg.id, msg.data.copy(order='C'))
+            val = self.db.decode_message(msg.id, msg.data.copy(order="C"))
 
             status_msg = DiagnosticStatus()
             status_msg.level = DiagnosticStatus.OK
@@ -71,9 +107,11 @@ class CandecodeNode(Node):
 
         except KeyError:
             if self.warn_if_unknown:
-                self.get_logger().warn('Unknown CAN ID: %s' % msg.id)
+                self.get_logger().warn("Unknown CAN ID: %s" % msg.id)
         except cantools.database.errors.DecodeError:
-            self.get_logger().warn('Failed to decode CAN ID: %s/%s' % (msg.id, hex(msg.id)))
+            self.get_logger().warn(
+                "Failed to decode CAN ID: %s/%s" % (msg.id, hex(msg.id))
+            )
 
 
 def main(args=None):
@@ -82,6 +120,7 @@ def main(args=None):
     rclpy.spin(node)
     node.destroy_node()
     rclpy.shutdown()
+
 
 if __name__ == "__main__":
     main()
