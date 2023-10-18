@@ -5,3 +5,4 @@ install
 log
 *.swp
 ros2_candecode/ros2_candecode/ros2_qtcanbus.code-workspace
+__pycache__
