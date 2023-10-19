@@ -39,6 +39,9 @@ class CandecodeNode(Node):
         super().__init__("candecode_node")
 
         qos_history_desc = ParameterDescriptor(description="QoS history depth")
+        decode_choices_desc = ParameterDescriptor(
+            description="Decode choices as strings"
+        )
         warn_if_unknown_desc = ParameterDescriptor(
             description="Warn if unknown CAN ID received"
         )
@@ -46,6 +49,7 @@ class CandecodeNode(Node):
             description="Path to DBC file to use for decoding"
         )
 
+        self.declare_parameter("decode_choices", False, decode_choices_desc)
         self.declare_parameter("qos_history", 100, qos_history_desc)
         self.declare_parameter("warn_if_unknown", False, warn_if_unknown_desc)
         self.declare_parameter(
@@ -54,6 +58,9 @@ class CandecodeNode(Node):
             dbc_file_desc,
         )
 
+        self.decode_choices = (
+            self.get_parameter("decode_choices").get_parameter_value().bool_value
+        )
         dbc_file = self.get_parameter("dbc_file").get_parameter_value().string_value
         qos_history = (
             self.get_parameter("qos_history").get_parameter_value().integer_value
@@ -82,7 +89,9 @@ class CandecodeNode(Node):
         self.get_logger().debug('received message: "%s/%s"' % (msg.id, hex(msg.id)))
 
         try:
-            val = self.db.decode_message(msg.id, msg.data.copy(order="C"))
+            val = self.db.decode_message(
+                msg.id, msg.data.copy(order="C"), decode_choices=self.decode_choices
+            )
 
             status_msg = DiagnosticStatus()
             status_msg.level = DiagnosticStatus.OK
