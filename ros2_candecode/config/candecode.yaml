@@ -1,0 +1,5 @@
+candecode_node:
+  ros__parameters:
+    decode_choices: false
+    warn_if_unknown: false
+    dbc_file: "/home/username/ros2_ws/src/ros2_qtcanbus/config/your_dbc_file.dbc"
