@@ -23,6 +23,9 @@
 # SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 import rclpy
+from rclpy.qos import QoSProfile
+from rclpy.qos_overriding_options import QoSOverridingOptions
+
 from rclpy.node import Node
 import cantools
 from rcl_interfaces.msg import ParameterDescriptor
@@ -38,7 +41,6 @@ class CandecodeNode(Node):
     def __init__(self):
         super().__init__("candecode_node")
 
-        qos_history_desc = ParameterDescriptor(description="QoS history depth")
         decode_choices_desc = ParameterDescriptor(
             description="Decode choices as strings"
         )
@@ -50,11 +52,10 @@ class CandecodeNode(Node):
         )
 
         self.declare_parameter("decode_choices", False, decode_choices_desc)
-        self.declare_parameter("qos_history", 100, qos_history_desc)
         self.declare_parameter("warn_if_unknown", False, warn_if_unknown_desc)
         self.declare_parameter(
             "dbc_file",
-            "/Users/tfoldi/Developer/mobility/canedge-influxdb-writer/dbc_files/Model3CAN.dbc",
+            "signals.dbc",
             dbc_file_desc,
         )
 
@@ -62,9 +63,6 @@ class CandecodeNode(Node):
             self.get_parameter("decode_choices").get_parameter_value().bool_value
         )
         dbc_file = self.get_parameter("dbc_file").get_parameter_value().string_value
-        qos_history = (
-            self.get_parameter("qos_history").get_parameter_value().integer_value
-        )
         self.warn_if_unknown = (
             self.get_parameter("warn_if_unknown").get_parameter_value().bool_value
         )
@@ -72,7 +70,10 @@ class CandecodeNode(Node):
         self.db = cantools.database.load_file(dbc_file)
 
         self.diagnostics_pub = self.create_publisher(
-            DiagnosticArray, "/diagnostics", qos_history
+            DiagnosticArray,
+            "/diagnostics",
+            rclpy.qos.qos_profile_sensor_data,
+            qos_overriding_options=QoSOverridingOptions.with_default_policies(),
         )
 
         self.subscription = self.create_subscription(
