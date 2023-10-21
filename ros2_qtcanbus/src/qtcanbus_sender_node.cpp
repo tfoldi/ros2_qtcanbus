@@ -134,11 +134,6 @@ void QtCanbusSenderNode::readFrames() {
     m_message.is_extended = frame.hasExtendedFrameFormat();
     m_message.is_error = frame.hasErrorStateIndicator();
 
-    // for (int i = 0; i <
-    // std::min(frame.payload().size(),(int)m_message.data.size()) ; i++)
-    // {
-    //     m_message.data[i] = frame.payload().at(i);
-    // }
     memcpy(m_message.data.data(), frame.payload().data(),
            std::min(frame.payload().size(), (int)m_message.data.size()));
 
