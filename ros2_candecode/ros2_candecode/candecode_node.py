@@ -67,7 +67,7 @@ class CandecodeNode(Node):
             self.get_parameter("warn_if_unknown").get_parameter_value().bool_value
         )
 
-        self.db = cantools.database.load_file(dbc_file)
+        self.db = cantools.database.load_file(dbc_file, strict=False)
 
         self.diagnostics_pub = self.create_publisher(
             DiagnosticArray,
@@ -118,6 +118,9 @@ class CandecodeNode(Node):
         except KeyError:
             if self.warn_if_unknown:
                 self.get_logger().warn("Unknown CAN ID: %s" % msg.id)
+        except ValueError:
+            if self.warn_if_unknown:
+                self.get_logger().warn("Error during decoding for CAN ID: %s" % msg.id)
         except cantools.database.errors.DecodeError:
             self.get_logger().warn(
                 "Failed to decode CAN ID: %s/%s" % (msg.id, hex(msg.id))
