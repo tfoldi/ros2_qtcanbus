@@ -34,7 +34,7 @@ from diagnostic_msgs.msg import DiagnosticArray
 from diagnostic_msgs.msg import DiagnosticStatus
 from diagnostic_msgs.msg import KeyValue
 
-from ros2_qtcanbus_msg.msg import QCanBusFrame
+from ros2_qtcanbus_msgs.msg import QCanBusFrame
 
 
 class CandecodeNode(Node):
