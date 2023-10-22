@@ -2892,6 +2892,7 @@ BO_ 1834 ID72ABMS_serialNumber: 8 VehicleBus
 
 BO_ 2047 ID7FFcarConfig: 8 VehicleBus
  SG_ GTW_carConfigMultiplexer M : 0|8@1+ (1,0) [0|255] ""  Receiver
+ SG_ GTW_CabinBlowerCtrlType m2 : 30|1@1+ (1,0) [0|1] ""  Receiver
  SG_ GTW_activeHighBeam m2 : 34|1@1+ (1,0) [0|1] ""  Receiver
  SG_ GTW_airSuspension m3 : 22|2@1+ (1,0) [0|2] ""  Receiver
  SG_ GTW_airbagCutoffSwitch m2 : 35|1@1+ (1,0) [0|1] ""  Receiver
@@ -2905,17 +2906,17 @@ BO_ 2047 ID7FFcarConfig: 8 VehicleBus
  SG_ GTW_brakeLineSwitchType m3 : 39|1@1+ (1,0) [0|1] ""  Receiver
  SG_ GTW_cabinPTCHeaterType m2 : 31|1@1+ (1,0) [0|1] ""  Receiver
  SG_ GTW_chassisType m3 : 18|3@1+ (1,0) [0|4] ""  Receiver
- SG_ GTW_compressorType m4 : 46|2@1+ (1,0) [0|3] ""  Receiver
+ SG_ GTW_compressorType m2 : 47|1@1+ (1,0) [0|1] ""  Receiver
  SG_ GTW_connectivityPackage m3 : 27|1@1+ (1,0) [0|1] ""  Receiver
  SG_ GTW_coolantPumpType m3 : 17|1@1+ (1,0) [0|1] ""  Receiver
  SG_ GTW_country m1 : 16|16@1+ (1,0) [0|65535] ""  Receiver
  SG_ GTW_dasHw m1 : 40|3@1+ (1,0) [3|4] ""  Receiver
  SG_ GTW_deliveryStatus m1 : 8|1@1+ (1,0) [0|1] ""  Receiver
- SG_ GTW_drivetrainType m1 : 10|1@1+ (1,0) [0|1] ""  Receiver
+ SG_ GTW_drivetrainType m1 : 10|1@1+ (1,0) [0|1] ""  odin
  SG_ GTW_eBuckConfig m2 : 32|1@1+ (1,0) [0|1] ""  Receiver
  SG_ GTW_eCallEnabled m4 : 40|2@1+ (1,0) [0|2] ""  Receiver
- SG_ GTW_efficiencyPackage m4 : 48|3@1+ (1,0) [0|5] ""  Receiver
- SG_ GTW_epasType m1 : 9|1@1+ (1,0) [0|0] ""  Receiver
+ SG_ GTW_efficiencyPackage m3 : 58|2@1+ (1,0) [0|3] ""  Receiver
+ SG_ GTW_epasType m1 : 9|1@1+ (1,0) [0|1] ""  Receiver
  SG_ GTW_espValveType m3 : 40|2@1+ (1,0) [0|2] ""  Receiver
  SG_ GTW_exteriorColor m2 : 48|3@1+ (1,0) [0|6] ""  Receiver
  SG_ GTW_frontFogLamps m2 : 20|1@1+ (1,0) [0|1] ""  Receiver
@@ -2924,16 +2925,22 @@ BO_ 2047 ID7FFcarConfig: 8 VehicleBus
  SG_ GTW_frontSeatType m3 : 60|3@1+ (1,0) [0|4] ""  Receiver
  SG_ GTW_headlamps m1 : 14|2@1+ (1,0) [0|2] ""  Receiver
  SG_ GTW_headlightLevelerType m3 : 47|1@1+ (1,0) [0|1] ""  Receiver
+ SG_ GTW_heatedWipers m2 : 8|1@1+ (1,0) [0|1] ""  Receiver
  SG_ GTW_homelinkType m2 : 13|1@1+ (1,0) [0|1] ""  Receiver
  SG_ GTW_hvacPanelVaneType m2 : 29|1@1+ (1,0) [0|1] ""  Receiver
+ SG_ GTW_hvacQuietSnorkelType m2 : 28|1@1+ (1,0) [0|1] ""  Receiver
+ SG_ GTW_ibstWakeType m2 : 24|1@1+ (1,0) [0|1] ""  Receiver
  SG_ GTW_immersiveAudio m3 : 56|2@1+ (1,0) [0|2] ""  Receiver
  SG_ GTW_interiorLighting m2 : 57|2@1+ (1,0) [0|2] ""  Receiver
  SG_ GTW_intrusionSensorType m2 : 36|1@1+ (1,0) [0|1] ""  Receiver
+ SG_ GTW_loggingVersion m2 : 22|1@1+ (1,0) [0|1] ""  Receiver
  SG_ GTW_lumbarECUType m2 : 23|1@1+ (1,0) [0|1] ""  Receiver
+ SG_ GTW_m3FrontOverheadConsoleType m2 : 25|1@1+ (1,0) [0|1] ""  Receiver
  SG_ GTW_mapRegion m3 : 8|4@1+ (1,0) [0|10] ""  Receiver
  SG_ GTW_memoryMirrors m2 : 17|1@1+ (1,0) [0|1] ""  Receiver
- SG_ GTW_numberHVILNodes m2 : 51|2@1+ (1,0) [2|3] ""  Receiver
- SG_ GTW_packEnergy m3 : 32|5@1+ (1,0) [0|2] ""  Receiver
+ SG_ GTW_numberHVILNodes m2 : 51|3@1+ (1,0) [0|5] ""  Receiver
+ SG_ GTW_packEnergy m3 : 32|5@1+ (1,0) [0|4] ""  Receiver
+ SG_ GTW_packMassDeviation m4 : 42|1@1+ (1,0) [0|1] ""  Receiver
  SG_ GTW_passengerAirbagType m4 : 43|2@1+ (1,0) [0|2] ""  Receiver
  SG_ GTW_passengerOccupancySensorType m3 : 24|1@1+ (1,0) [0|1] ""  Receiver
  SG_ GTW_pedestrianWarningSound m2 : 54|1@1+ (1,0) [0|1] ""  Receiver
@@ -2941,6 +2948,7 @@ BO_ 2047 ID7FFcarConfig: 8 VehicleBus
  SG_ GTW_plcSupportType m3 : 28|2@1+ (1,0) [0|2] ""  Receiver
  SG_ GTW_powerSteeringColumn m2 : 18|1@1+ (1,0) [0|1] ""  Receiver
  SG_ GTW_radarHeaterType m3 : 55|1@1+ (1,0) [0|1] ""  Receiver
+ SG_ GTW_rearDriveUnitType m3 : 21|1@1+ (1,0) [0|1] ""  Receiver
  SG_ GTW_rearFogLamps m2 : 39|1@1+ (1,0) [0|1] ""  Receiver
  SG_ GTW_rearGlassType m2 : 38|1@1+ (1,0) [0|1] ""  Receiver
  SG_ GTW_rearLightType m1 : 12|2@1+ (1,0) [0|2] ""  Receiver
@@ -2949,21 +2957,21 @@ BO_ 2047 ID7FFcarConfig: 8 VehicleBus
  SG_ GTW_restraintsHardwareType m1 : 48|8@1+ (1,0) [21|163] ""  Receiver
  SG_ GTW_rightHandDrive m1 : 11|1@1+ (1,0) [0|1] ""  Receiver
  SG_ GTW_roofGlassType m2 : 61|1@1+ (1,0) [0|1] ""  Receiver
- SG_ GTW_roofType m2 : 40|1@1+ (1,0) [1|1] ""  Receiver
+ SG_ GTW_roofType m2 : 40|2@1+ (1,0) [0|2] ""  Receiver
  SG_ GTW_softRange m3 : 42|3@1+ (1,0) [0|2] ""  Receiver
  SG_ GTW_spoilerType m2 : 37|1@1+ (1,0) [0|1] ""  Receiver
- SG_ GTW_steeringColumnMotorType m4 : 52|1@1+ (1,0) [0|1] ""  Receiver
  SG_ GTW_steeringColumnUJointType m2 : 55|1@1+ (1,0) [0|1] ""  Receiver
  SG_ GTW_superchargingAccess m2 : 45|2@1+ (1,0) [0|2] ""  Receiver
  SG_ GTW_tireType m1 : 32|5@1+ (1,0) [0|21] ""  Receiver
  SG_ GTW_towPackage m3 : 15|1@1+ (1,0) [0|1] ""  Receiver
  SG_ GTW_tpmsType m2 : 11|1@1+ (1,0) [0|1] ""  Receiver
+ SG_ GTW_trackModePackage m2 : 62|1@1+ (1,0) [0|1] ""  Receiver
  SG_ GTW_twelveVBatteryType m3 : 63|1@1+ (1,0) [0|1] ""  Receiver
  SG_ GTW_vdcType m2 : 14|1@1+ (1,0) [0|1] ""  Receiver
  SG_ GTW_wheelType m3 : 48|7@1+ (1,0) [0|20] ""  Receiver
  SG_ GTW_windshieldType m2 : 33|1@1+ (1,0) [0|1] ""  Receiver
  SG_ GTW_xcpESP m2 : 16|1@1+ (1,0) [0|1] ""  Receiver
- SG_ GTW_xcpIbst m2 : 15|1@1+ (1,0) [0|1] ""  Receiver
+ SG_ GTW_xcpIbst m2 : 15|1@1+ (1,0) [0|1] ""  Receiver 
 
 BO_ 818 ID332BattBrickMinMax: 6 VehicleBus
  SG_ BattBrickMultiplexer332 M : 0|2@1+ (1,0) [0|0] ""  Receiver
