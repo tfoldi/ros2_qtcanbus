@@ -36,7 +36,7 @@
 #include <QTimer>
 
 #include "rclcpp/rclcpp.hpp"
-#include "ros2_qtcanbus_msg/msg/q_can_bus_frame.hpp"
+#include "ros2_qtcanbus_msgs/msg/q_can_bus_frame.hpp"
 #include "std_msgs/msg/int32.hpp"
 
 class QtCanbusSenderNode : public QObject, public rclcpp::Node {
@@ -52,7 +52,7 @@ class QtCanbusSenderNode : public QObject, public rclcpp::Node {
  private:
   QCanBusDevice* m_canDevice = nullptr;
 
-  rclcpp::Publisher<ros2_qtcanbus_msg::msg::QCanBusFrame>::SharedPtr
+  rclcpp::Publisher<ros2_qtcanbus_msgs::msg::QCanBusFrame>::SharedPtr
       m_publisher;
-  ros2_qtcanbus_msg::msg::QCanBusFrame m_message;
+  ros2_qtcanbus_msgs::msg::QCanBusFrame m_message;
 };

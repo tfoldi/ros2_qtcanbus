@@ -9,7 +9,7 @@
 
   <depend>std_msgs</depend>
   <depend>rclpy</depend>
-  <depend>ros2_qtcanbus_msg</depend>
+  <depend>ros2_qtcanbus_msgs</depend>
   <depend>diagnostic_msgs</depend>
 
   <test_depend>ament_copyright</test_depend>
