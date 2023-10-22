@@ -36,7 +36,7 @@
 
 #include "rclcpp/rclcpp.hpp"
 #include "rmw/qos_profiles.h"
-#include "ros2_qtcanbus_msg/msg/q_can_bus_frame.hpp"
+#include "ros2_qtcanbus_msgs/msg/q_can_bus_frame.hpp"
 
 #include "qtcanbus_sender_node.h"
 
@@ -64,7 +64,7 @@ QtCanbusSenderNode::QtCanbusSenderNode(QObject* parent)
                                              << canbus_interface.c_str());
 
   auto qos = rclcpp::QoS(rclcpp::KeepLast(100), rmw_qos_profile_sensor_data);
-  m_publisher = this->create_publisher<ros2_qtcanbus_msg::msg::QCanBusFrame>(
+  m_publisher = this->create_publisher<ros2_qtcanbus_msgs::msg::QCanBusFrame>(
       "from_can_bus", qos);
 
   RCLCPP_DEBUG_STREAM(
