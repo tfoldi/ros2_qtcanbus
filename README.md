@@ -1,7 +1,7 @@
 # ros2_qtcanbus
 QT5 QSerialBus / QCanBus support for ROS2
 
-This package is designed to bridge the gap between CAN buses and ROS2 by publishing CAN bus data through QSerialBus / QCanBus interfaces (including Qt5 QSerial plugins).
+This package is designed to bridge the gap between CAN buses and ROS2 by publishing CAN bus data through QSerialBus / QCanBus interfaces (including Qt5 QSerial plugins). It has a module for decoding messages (ros2_candecode) and share them as Twist, NavSatFix or `DiagnosticArray`.
 
 ## Features
 
@@ -27,8 +27,7 @@ git clone https://github.com/tfoldi/ros2_qtcanbus.git
 2. Build the package using colcon:
 
 ```bash
-Copy code
-colcon build --packages-select ros2_qtcanbus
+colcon build
 ```
 
 ## Usage
@@ -44,7 +43,7 @@ ros2 run ros2_qtcanbus qtcanbus_node
 
 ## Configuration
 
-You can configure the package by modifying the config/qtcanbus.yaml file to match your CAN bus setup. 
+You can configure the package by modifying the ros2_candecode/config/candecode.yaml file to match your CAN bus setup. 
 
 ## Contributing
 We welcome contributions, PRs are welcome.
