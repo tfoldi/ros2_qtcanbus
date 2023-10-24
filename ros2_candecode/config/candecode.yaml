@@ -12,3 +12,10 @@ candecode_node:
         altitude: ""
         accuracy: GPSAccuracy04F
         status: ""
+    twist_mapping:
+      frame_id: "base_link"
+      canbus_message_id: 599
+      uom: "kph"
+      field_mapping:
+        linear:
+          x: DI_vehicleSpeed
