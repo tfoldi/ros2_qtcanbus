@@ -1,7 +1,7 @@
 # ros2_qtcanbus
 QT5 QSerialBus / QCanBus support for ROS2
 
-This package is designed to bridge the gap between CAN buses and ROS2 by publishing CAN bus data through QSerialBus / QCanBus interfaces (including Qt5 QSerial plugins). It has a module for decoding messages (ros2_candecode) and share them as Twist, NavSatFix or `DiagnosticArray`.
+This package is designed to bridge the gap between CAN buses and ROS2 by publishing CAN bus data through QSerialBus / QCanBus interfaces (including Qt5 QSerial plugins). It has a module for decoding messages (ros2_candecode) and share them as `Twist`, `NavSatFix` or `DiagnosticArray`.
 
 ## Features
 
@@ -11,7 +11,7 @@ This package is designed to bridge the gap between CAN buses and ROS2 by publish
 
 ## Dependencies
 
-- ROS2 Foxy, Galactic, or Rolling (or later)
+- ROS2 Foxy, Galactic, or Rolling (or later). `main` should work on all of these.
 - Qt 5.12 or later
 
 ## Installation
@@ -22,7 +22,6 @@ This package is designed to bridge the gap between CAN buses and ROS2 by publish
 git clone https://github.com/tfoldi/ros2_qtcanbus.git
 
 ```
-
 
 2. Build the package using colcon:
 
@@ -36,14 +35,19 @@ colcon build
 source install/setup.bash
 ```
 
-2. Run the node:
+2. Run the CAN bus data publisher node:
 ```bash
-ros2 run ros2_qtcanbus qtcanbus_node
+ros2 run ros2_qtcanbus qtcanbus_sender --ros-args -p canbus_plugin:=<your_qt_plugin> -p canbus_interface:=<your_can_if>
+```
+
+3. Run the decode node:
+```bash
+ros2 launch ros2_candecode standalone.py
 ```
 
 ## Configuration
 
-You can configure the package by modifying the ros2_candecode/config/candecode.yaml file to match your CAN bus setup. 
+You can configure the decoder mappings and rules by modifying the `ros2_candecode/config/candecode.yaml` file to match your CAN bus setup. 
 
 ## Contributing
 We welcome contributions, PRs are welcome.
