@@ -81,8 +81,7 @@ class GPSDecoder:
         self.navsat_fix_pub = self.node.create_publisher(
             NavSatFix,
             "/navsat/fix",
-            # rclpy.qos.qos_profile_soensor_data,
-            100,
+            rclpy.qos.qos_profile_sensor_data,
             qos_overriding_options=QoSOverridingOptions.with_default_policies(),
         )
 
