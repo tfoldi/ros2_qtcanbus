@@ -23,23 +23,24 @@
 # SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 import rclpy
-from rclpy.qos import QoSProfile
-from rclpy.qos_overriding_options import QoSOverridingOptions
-
 from rclpy.node import Node
-import cantools
+from rclpy.qos_overriding_options import QoSOverridingOptions
 from rcl_interfaces.msg import ParameterDescriptor
+
+import cantools
 
 from diagnostic_msgs.msg import DiagnosticArray
 from diagnostic_msgs.msg import DiagnosticStatus
 from diagnostic_msgs.msg import KeyValue
 
 from ros2_qtcanbus_msgs.msg import QCanBusFrame
+from ros2_candecode.gps_decoder import GPSDecoder
 
 
 class CandecodeNode(Node):
     def __init__(self):
         super().__init__("candecode_node")
+        self.gps_decoder = GPSDecoder(self)
 
         decode_choices_desc = ParameterDescriptor(
             description="Decode choices as strings"
@@ -93,27 +94,10 @@ class CandecodeNode(Node):
             val = self.db.decode_message(
                 msg.id, msg.data.copy(order="C"), decode_choices=self.decode_choices
             )
+            self.publish_diagnostics(val, msg)
 
-            status_msg = DiagnosticStatus()
-            status_msg.level = DiagnosticStatus.OK
-            status_msg.hardware_id = hex(msg.id)
-
-            for key in val:
-                key_value = KeyValue()
-                key_value.key = key
-                key_value.value = str(val[key])
-                status_msg.values.append(key_value)
-
-            status_msg.name = self.db.get_message_by_frame_id(msg.id).name
-
-            diag_msg = DiagnosticArray()
-            diag_msg.header.stamp = msg.header.stamp
-            diag_msg.header.frame_id = msg.header.frame_id
-            diag_msg.status.append(status_msg)
-
-            self.get_logger().debug(str(val))
-
-            self.diagnostics_pub.publish(diag_msg)
+            if self.gps_decoder.is_navsat_message(msg.id):
+                self.gps_decoder.decode_gps_message(val, msg)
 
         except KeyError:
             if self.warn_if_unknown:
@@ -125,6 +109,28 @@ class CandecodeNode(Node):
             self.get_logger().warn(
                 "Failed to decode CAN ID: %s/%s" % (msg.id, hex(msg.id))
             )
+
+    def publish_diagnostics(self, val, msg):
+        status_msg = DiagnosticStatus()
+        status_msg.level = DiagnosticStatus.OK
+        status_msg.hardware_id = hex(msg.id)
+
+        for key in val:
+            key_value = KeyValue()
+            key_value.key = key
+            key_value.value = str(val[key])
+            status_msg.values.append(key_value)
+
+        status_msg.name = self.db.get_message_by_frame_id(msg.id).name
+
+        diag_msg = DiagnosticArray()
+        diag_msg.header.stamp = msg.header.stamp
+        diag_msg.header.frame_id = msg.header.frame_id
+        diag_msg.status.append(status_msg)
+
+        self.get_logger().debug(str(val))
+
+        self.diagnostics_pub.publish(diag_msg)
 
 
 def main(args=None):

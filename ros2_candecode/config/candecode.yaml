@@ -2,4 +2,13 @@ candecode_node:
   ros__parameters:
     decode_choices: false
     warn_if_unknown: false
-    dbc_file: "/home/username/ros2_ws/src/ros2_qtcanbus/config/your_dbc_file.dbc"
+    dbc_file: /Users/tfoldi/Developer/mobility/canedge-influxdb-writer/dbc_files/Model3CAN.dbc
+    navsat_mapping:
+      frame_id: "gps"
+      canbus_message_id: 79
+      field_mapping:
+        latitude: GPSLatitude04F
+        longitude: GPSLongitude04F
+        altitude: ""
+        accuracy: GPSAccuracy04F
+        status: ""
