@@ -35,12 +35,14 @@ from diagnostic_msgs.msg import KeyValue
 
 from ros2_qtcanbus_msgs.msg import QCanBusFrame
 from ros2_candecode.gps_decoder import GPSDecoder
+from ros2_candecode.twist_decoder import TwistDecoder
 
 
 class CandecodeNode(Node):
     def __init__(self):
         super().__init__("candecode_node")
         self.gps_decoder = GPSDecoder(self)
+        self.twist_decoder = TwistDecoder(self)
 
         decode_choices_desc = ParameterDescriptor(
             description="Decode choices as strings"
@@ -98,6 +100,9 @@ class CandecodeNode(Node):
 
             if self.gps_decoder.is_navsat_message(msg.id):
                 self.gps_decoder.decode_gps_message(val, msg)
+
+            if self.twist_decoder.is_twist_message(msg.id):
+                self.twist_decoder.decode_twist_message(val, msg)
 
         except KeyError:
             if self.warn_if_unknown:
