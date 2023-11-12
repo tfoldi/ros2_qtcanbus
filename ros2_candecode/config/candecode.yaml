@@ -4,7 +4,7 @@ candecode_node:
     warn_if_unknown: false
     dbc_file: /Users/tfoldi/Developer/mobility/canedge-influxdb-writer/dbc_files/Model3CAN.dbc
     navsat_mapping:
-      frame_id: "gps"
+      frame_id: "base_link"
       canbus_message_id: 79
       field_mapping:
         latitude: GPSLatitude04F
