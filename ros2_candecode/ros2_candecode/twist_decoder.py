@@ -24,7 +24,7 @@
 
 import rclpy
 from rclpy.qos_overriding_options import QoSOverridingOptions
-from geometry_msgs.msg import TwistStamped
+from geometry_msgs.msg import TwistWithCovarianceStamped
 
 
 class TwistDecoder:
@@ -44,6 +44,7 @@ class TwistDecoder:
                 ("twist_mapping.field_mapping.angular.x", ""),
                 ("twist_mapping.field_mapping.angular.y", ""),
                 ("twist_mapping.field_mapping.angular.z", ""),
+                ("twist_mapping.covariance", 1e-6),
             ],
         )
         self.canbus_message_id = node.get_parameter(
@@ -83,9 +84,10 @@ class TwistDecoder:
         ).value
 
         self.uom = node.get_parameter("twist_mapping.uom").value
+        self.covariance = node.get_parameter("twist_mapping.covariance").value
 
         self.twist_pub = self.node.create_publisher(
-            TwistStamped,
+            TwistWithCovarianceStamped,
             "/vel",
             rclpy.qos.qos_profile_sensor_data,
             qos_overriding_options=QoSOverridingOptions.with_default_policies(),
@@ -102,7 +104,7 @@ class TwistDecoder:
     def decode_twist_message(self, canframe, msg):
         self.get_logger().debug("Decoding Twist message: %s" % canframe)
 
-        twist_msg = TwistStamped()
+        twist_msg = TwistWithCovarianceStamped()
         twist_msg.header.frame_id = self.frame_id
         twist_msg.header.stamp = msg.header.stamp
 
@@ -111,33 +113,44 @@ class TwistDecoder:
             multiplier = 1.0 / 3.6
 
         if self.field_mapping["linear_x"]:
-            twist_msg.twist.linear.x = (
+            twist_msg.twist.twist.linear.x = (
                 canframe.get(self.field_mapping["linear_x"]) * multiplier
             )
 
         if self.field_mapping["linear_y"]:
-            twist_msg.twist.linear.y = (
+            twist_msg.twist.twist.linear.y = (
                 canframe.get(self.field_mapping["linear_y"]) * multiplier
             )
 
         if self.field_mapping["linear_z"]:
-            twist_msg.twist.linear.z = (
+            twist_msg.twist.twist.linear.z = (
                 canframe.get(self.field_mapping["linear_z"]) * multiplier
             )
 
         if self.field_mapping["angular_x"]:
-            twist_msg.twist.angular.x = (
+            twist_msg.twist.twist.angular.x = (
                 canframe.get(self.field_mapping["angular_x"]) * multiplier
             )
 
         if self.field_mapping["angular_y"]:
-            twist_msg.twist.angular.y = (
+            twist_msg.twist.twist.angular.y = (
                 canframe.get(self.field_mapping["angular_y"]) * multiplier
             )
 
         if self.field_mapping["angular_z"]:
-            twist_msg.twist.angular.z = (
+            twist_msg.twist.twist.angular.z = (
                 canframe.get(self.field_mapping["angular_z"]) * multiplier
             )
+
+        # fmt: off
+        covariance = [self.covariance, 0.0, 0.0, 0.0, 0.0, 0.0,
+                      0.0, self.covariance, 0.0, 0.0, 0.0, 0.0,
+                      0.0, 0.0, self.covariance, 0.0, 0.0, 0.0,
+                      0.0, 0.0, 0.0, self.covariance, 0.0, 0.0,
+                      0.0, 0.0, 0.0, 0.0, self.covariance, 0.0,
+                      0.0, 0.0, 0.0, 0.0, 0.0, self.covariance]
+        # fmt: on
+
+        twist_msg.twist.covariance = covariance
 
         self.twist_pub.publish(twist_msg)
