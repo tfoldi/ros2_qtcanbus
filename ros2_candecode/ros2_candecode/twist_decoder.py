@@ -44,7 +44,7 @@ class TwistDecoder:
                 ("twist_mapping.field_mapping.angular.x", ""),
                 ("twist_mapping.field_mapping.angular.y", ""),
                 ("twist_mapping.field_mapping.angular.z", ""),
-                ("twist_mapping.covariance", 1e-6),
+                ("twist_mapping.covariance", 1e-2),
             ],
         )
         self.canbus_message_id = node.get_parameter(
