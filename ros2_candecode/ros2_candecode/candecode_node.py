@@ -94,7 +94,7 @@ class CandecodeNode(Node):
 
         try:
             val = self.db.decode_message(
-                msg.id, msg.data.copy(order="C"), decode_choices=self.decode_choices
+                msg.id, msg.data.tobytes(order="C"), decode_choices=self.decode_choices
             )
             self.publish_diagnostics(val, msg)
 
@@ -107,9 +107,9 @@ class CandecodeNode(Node):
         except KeyError:
             if self.warn_if_unknown:
                 self.get_logger().warn("Unknown CAN ID: %s" % msg.id)
-        except ValueError:
+        except ValueError as err:
             if self.warn_if_unknown:
-                self.get_logger().warn("Error during decoding for CAN ID: %s" % msg.id)
+                self.get_logger().warn(f"Error during decoding for CAN ID: {msg.id} - {err}")
         except cantools.database.errors.DecodeError:
             self.get_logger().warn(
                 "Failed to decode CAN ID: %s/%s" % (msg.id, hex(msg.id))
