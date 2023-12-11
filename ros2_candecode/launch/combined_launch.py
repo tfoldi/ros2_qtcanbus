@@ -5,50 +5,65 @@ from launch.launch_description_sources import PythonLaunchDescriptionSource
 from ament_index_python.packages import get_package_share_directory
 import os
 
+
 def generate_launch_description():
-    # Static Transform Publisher
-    static_transform_publisher = Node(
-        package='tf2_ros',
-        executable='static_transform_publisher',
-        name='static_transform_publisher',
-        arguments=['0', '0', '1', '0', '0', '0', 'map', 'velodyne']  # X, Y, Z, frame_id, child_frame_id
-
-    )
-
     # QT CAN Bus Sender
     # Replace this with the appropriate launch file if available
     qtcanbus_sender = Node(
-        package='ros2_qtcanbus',
-        executable='qtcanbus_sender',
-        name='qtcanbus_sender',
-        parameters=[{'canbus_plugin': 'clx000can', 'canbus_interface': 'cu.usbmodem123456781'}],
-        arguments=['--ros-args', '--log-level', 'debug']
+        package="ros2_qtcanbus",
+        executable="qtcanbus_sender",
+        name="qtcanbus_sender",
+        parameters=[
+            {"canbus_plugin": "clx000can", "canbus_interface": "cu.usbmodem123456781"}
+        ],
+        arguments=["--ros-args", "--log-level", "debug"],
     )
 
     # ROS2 CAN Decode
     # Adjust this path to the actual launch file location
     ros2_candecode_launch_file = IncludeLaunchDescription(
-        PythonLaunchDescriptionSource([os.path.join(
-            get_package_share_directory('ros2_candecode'), 'launch', 'standalone_launch.py')])
+        PythonLaunchDescriptionSource(
+            [
+                os.path.join(
+                    get_package_share_directory("ros2_candecode"),
+                    "launch",
+                    "standalone_launch.py",
+                )
+            ]
+        )
     )
 
     # Velodyne
     velodyne_launch_file = IncludeLaunchDescription(
-        PythonLaunchDescriptionSource([os.path.join(
-            get_package_share_directory('velodyne'), 'launch', 'velodyne-all-nodes-VLP16-launch.py')])
+        PythonLaunchDescriptionSource(
+            [
+                os.path.join(
+                    get_package_share_directory("velodyne"),
+                    "launch",
+                    "velodyne-all-nodes-VLP16-launch.py",
+                )
+            ]
+        )
     )
 
     # Witmotion
     witmotion_launch_file = IncludeLaunchDescription(
-        PythonLaunchDescriptionSource([os.path.join(
-            get_package_share_directory('witmotion_ros'), 'launch', 'wt901.launch.py')])
+        PythonLaunchDescriptionSource(
+            [
+                os.path.join(
+                    get_package_share_directory("witmotion_ros"),
+                    "launch",
+                    "wt901.launch.py",
+                )
+            ]
+        )
     )
 
-    return LaunchDescription([
-        static_transform_publisher,
-        qtcanbus_sender,
-        ros2_candecode_launch_file,
-        velodyne_launch_file,
-        witmotion_launch_file
-    ])
-
+    return LaunchDescription(
+        [
+            qtcanbus_sender,
+            ros2_candecode_launch_file,
+            velodyne_launch_file,
+            witmotion_launch_file,
+        ]
+    )
