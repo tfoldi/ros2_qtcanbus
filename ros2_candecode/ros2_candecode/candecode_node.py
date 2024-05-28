@@ -33,7 +33,7 @@ from diagnostic_msgs.msg import DiagnosticArray
 from diagnostic_msgs.msg import DiagnosticStatus
 from diagnostic_msgs.msg import KeyValue
 
-from ros2_qtcanbus_msgs.msg import QCanBusFrame
+from can_msgs.msg import Frame
 from ros2_candecode.gps_decoder import GPSDecoder
 from ros2_candecode.twist_decoder import TwistDecoder
 
@@ -80,7 +80,7 @@ class CandecodeNode(Node):
         )
 
         self.subscription = self.create_subscription(
-            QCanBusFrame,
+            Frame,
             "from_can_bus",
             self.listener_callback,
             rclpy.qos.qos_profile_sensor_data,
